@@ -17,6 +17,15 @@ http.createServer((req, res) => {
     let q = url.parse(req.url, true) 
     let pathname = q.pathname
 
+    if (req.method === "OPTIONS") {
+        res.writeHead(200, {
+            'Access-Control-Allow-Origin': 'https://db-frontend-teal.vercel.app/', // Replace with your frontend URL
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+        });
+        res.end();
+    }
+
     if (pathname.includes("/lab5/api/v1/sql/") ) {
 
         let sql = pathname.substring(pathname.lastIndexOf('/') + 1)
