@@ -19,7 +19,7 @@ http.createServer((req, res) => {
 
     if (req.method === "OPTIONS") {
         res.writeHead(200, {
-            'Access-Control-Allow-Origin': 'https://db-frontend-teal.vercel.app/', // Replace with your frontend URL
+            'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type',
         });
