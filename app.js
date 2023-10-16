@@ -61,7 +61,7 @@ http.createServer((req, res) => {
             con.query(data.query, (err, result) => {
                 if (err) {
                     res.writeHead(400, { 'Content-Type': 'text/html', 'Access-Control-Allow-Origin': '*' });
-                    res.end("You got an SQL error, please check your SQL query");
+                    res.end("You got an SQL error, please check your SQL query" + err.message);
                 } else {
                     console.log(result);
                     res.writeHead(200, { 'Content-Type': 'text/html', 'Access-Control-Allow-Origin': '*' });
