@@ -12,6 +12,24 @@ const con = mysql.createPool({
     database: "sql3653624"
 });
 
+// Define the SQL query to create the table if it doesn't exist
+const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS patients (
+        patientid INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255),
+        dateOfBirth DATE
+    );
+`;
+
+// Execute the table creation query
+con.query(createTableQuery, (err) => {
+    if (err) {
+        console.error('Error creating the table:', err);
+    } else {
+        console.log('Table "patients" created (if it didn\'t exist)');
+    }
+});
+
 http.createServer((req, res) => {
     let q = url.parse(req.url, true);
     let pathname = q.pathname;
