@@ -23,12 +23,6 @@ const con = mysql.createPool({
     database: DATABASE
 });
 
-con.query(createTableQuery, (err) => {
-    if (err) {
-        console.error('Error creating the table:', err);
-    }
-});
-
 http.createServer((req, res) => {
     let q = url.parse(req.url, true);
     let pathname = q.pathname;
@@ -68,6 +62,12 @@ http.createServer((req, res) => {
         req.on('data', function (chunk) {
             if (chunk != null) {
                 body += chunk;
+            }
+        });
+
+        con.query(createTableQuery, (err) => {
+            if (err) {
+                console.error('Error creating the table:', err);
             }
         });
 
