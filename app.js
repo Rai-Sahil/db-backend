@@ -3,30 +3,29 @@ const url = require("url");
 const mysql = require("mysql");
 const port = 3000;
 
-let req_count = 0;
-
-const con = mysql.createPool({
-    host: "sql3.freesqldatabase.com",
-    user: "sql3653624",
-    password: "6pJQ4W2ARc",
-    database: "sql3653624"
-});
-
-// Define the SQL query to create the table if it doesn't exist
+// Constants
 const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS patient (
-        patientid INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255),
-        dateOfBirth DATE
+    CREATE TABLE IF NOT EXISTS patients (
+        patientid INT(10) UNSIGNED ZEROFILL AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100),
+        dateOfBirth DATETIME
     );
 `;
+const HOST = "sql3.freesqldatabase.com";
+const USER = "sql3653624";
+const PASSWORD = "6pJQ4W2ARc";
+const DATABASE = "sql3653624";
 
-// Execute the table creation query
+const con = mysql.createPool({
+    host: HOST,
+    user: USER,
+    password: PASSWORD,
+    database: DATABASE
+});
+
 con.query(createTableQuery, (err) => {
     if (err) {
         console.error('Error creating the table:', err);
-    } else {
-        console.log('Table "patients" created (if it didn\'t exist)');
     }
 });
 
@@ -35,7 +34,6 @@ http.createServer((req, res) => {
     let pathname = q.pathname;
 
     if (req.method === "OPTIONS") {
-        // Handle CORS preflight request
         res.writeHead(200, {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -43,7 +41,6 @@ http.createServer((req, res) => {
         });
         res.end();
     } else if (pathname.includes("/lab5/api/v1/sql/")) {
-        // Handle SQL query request
         let sql = pathname.substring(pathname.lastIndexOf('/') + 1);
         let clean_sql = sql.replace(/%20/g, " ");
 
