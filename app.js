@@ -9,7 +9,7 @@ const createTableQuery = `
         patientid INT(10) UNSIGNED ZEROFILL AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100),
         dateOfBirth DATETIME
-    );
+    ) ENGINE=InnoDB;
 `;
 const HOST = "sql3.freesqldatabase.com";
 const USER = "sql3653624";
