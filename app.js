@@ -34,7 +34,7 @@ http.createServer((req, res) => {
             'Access-Control-Allow-Headers': 'Content-Type',
         });
         res.end();
-    // GPT
+        // GPT
     } else if (pathname.includes("/lab5/api/v1/sql/")) {
         let sql = pathname.substring(pathname.lastIndexOf('/') + 1);
         let clean_sql = sql.replace(/%20/g, " ");
@@ -73,6 +73,14 @@ http.createServer((req, res) => {
 
         req.on("end", () => {
             let data = JSON.parse(body);
+
+
+            con.query(createTableQuery, (err) => {
+                if (err) {
+                    console.error('Error creating the table:', err);
+                }
+            });
+
             con.query(data.query, (err, result) => {
                 if (err) {
                     res.writeHead(400, { 'Content-Type': 'text/html', 'Access-Control-Allow-Origin': '*' });
