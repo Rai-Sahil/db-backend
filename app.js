@@ -1,7 +1,6 @@
 const http = require('http');
 const url = require("url");
 const mysql = require("mysql");
-const port = 3000;
 
 // Constants
 const createTableQuery = `
@@ -15,6 +14,7 @@ const HOST = "sql3.freesqldatabase.com";
 const USER = "sql3653624";
 const PASSWORD = "6pJQ4W2ARc";
 const DATABASE = "sql3653624";
+const PORT = 3000;
 
 const con = mysql.createPool({
     host: HOST,
@@ -32,7 +32,7 @@ con.query(createTableQuery, (err) => {
 http.createServer((req, res) => {
     let q = url.parse(req.url, true);
     let pathname = q.pathname;
-
+    // GPT
     if (req.method === "OPTIONS") {
         res.writeHead(200, {
             'Access-Control-Allow-Origin': '*',
@@ -40,6 +40,7 @@ http.createServer((req, res) => {
             'Access-Control-Allow-Headers': 'Content-Type',
         });
         res.end();
+    // GPT
     } else if (pathname.includes("/lab5/api/v1/sql/")) {
         let sql = pathname.substring(pathname.lastIndexOf('/') + 1);
         let clean_sql = sql.replace(/%20/g, " ");
@@ -62,7 +63,6 @@ http.createServer((req, res) => {
             }
         });
     } else if (req.method === "POST" && pathname == "/lab5/insert") {
-        // Handle POST request
         let body = "";
 
         req.on('data', function (chunk) {
@@ -85,7 +85,6 @@ http.createServer((req, res) => {
             });
         });
     } else if (req.method === "GET" && pathname.includes("/lab5/select")) {
-        // Handle GET request
         let sql = pathname.substring(pathname.lastIndexOf('/') + 1);
         let clean_sql = sql.replace(/%20/g, " ");
 
@@ -106,6 +105,6 @@ http.createServer((req, res) => {
         res.end();
     }
 
-}).listen(port);
+}).listen(PORT);
 
-console.log("Server is running and listening on port: " + port);
+console.log("Server is running and listening on port: " + PORT);
