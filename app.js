@@ -14,7 +14,7 @@ const con = mysql.createPool({
 
 // Define the SQL query to create the table if it doesn't exist
 const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS patients (
+    CREATE TABLE IF NOT EXISTS patient (
         patientid INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255),
         dateOfBirth DATE
